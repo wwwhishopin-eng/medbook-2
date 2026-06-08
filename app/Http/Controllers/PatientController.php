@@ -10,10 +10,6 @@ use Illuminate\View\View;
 
 class PatientController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Full patient list (server-rendered; Livewire handles search/filter).
