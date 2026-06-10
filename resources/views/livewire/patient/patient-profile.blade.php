@@ -2,7 +2,7 @@
 
     {{-- Profile Header Card --}}
     <div class="card" style="padding:24px;margin-bottom:20px;">
-        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+        <div class="profile-header">
 
             {{-- Avatar --}}
             <div class="avatar"
@@ -12,7 +12,7 @@
             </div>
 
             {{-- Name & meta --}}
-            <div style="flex:1;">
+            <div style="flex:1;min-width:0;">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
                     <h2 style="font-size:22px;font-weight:700;color:#111A6B;margin:0;">
                         {{ $patient->full_name }}
@@ -46,10 +46,9 @@
             </div>
 
             {{-- Action buttons --}}
-            <div style="display:flex;gap:8px;flex-shrink:0;">
+            <div class="profile-header-actions" style="display:flex;gap:8px;flex-shrink:0;">
                 <button
-                    x-data
-                    @click="$dispatch('open-patient-form', { id: {{ $patient->id }} })"
+                    wire:click="$dispatch('open-patient-form', { id: {{ $patient->id }} })"
                     class="btn-ghost"
                     style="font-size:13px;padding:8px 16px;">
                     ویرایش اطلاعات
@@ -92,13 +91,10 @@
     </div>
 
     {{-- Tabs --}}
-    <div style="display:flex;gap:4px;margin-bottom:16px;background:#fff;padding:6px;border-radius:14px;
-                box-shadow:0 1px 4px rgba(17,26,107,0.06);">
+    <div class="tab-bar" style="margin-bottom:16px;">
         @foreach(['overview' => 'اطلاعات کلی', 'history' => 'سابقه پزشکی', 'conditions' => 'بیماری‌ها', 'contact' => 'تماس'] as $tab => $label)
             <button wire:click="setTab('{{ $tab }}')"
-                    style="flex:1;padding:10px;border-radius:10px;border:none;cursor:pointer;font-size:13px;
-                           font-family:'Vazirmatn',sans-serif;font-weight:{{ $activeTab === $tab ? '600' : '400' }};
-                           transition:all .2s;
+                    style="font-weight:{{ $activeTab === $tab ? '600' : '400' }};
                            {{ $activeTab === $tab
                                ? 'background:linear-gradient(135deg,#2E5BFF,#1A3FDB);color:#fff;box-shadow:0 4px 15px rgba(46,91,255,0.3);'
                                : 'background:transparent;color:#6B7280;' }}">
@@ -109,7 +105,7 @@
 
     {{-- Tab: Overview --}}
     @if($activeTab === 'overview')
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="fade-up">
+    <div class="grid-2-col" class="fade-up">
 
         {{-- Personal info --}}
         <div class="card" style="padding:20px;">
@@ -152,7 +148,7 @@
         @if($patient->allergies && count($patient->allergies))
         <div class="card" style="padding:20px;">
             <h4 style="font-size:14px;font-weight:700;color:#991B1B;margin:0 0 14px;">
-                ⚠️ آلرژی‌ها
+                آلرژی‌ها
             </h4>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 @foreach($patient->allergies as $allergy)
@@ -226,13 +222,13 @@
 
     {{-- Tab: Contact --}}
     @if($activeTab === 'contact')
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="fade-up">
+    <div class="grid-2-col" class="fade-up">
         <div class="card" style="padding:20px;">
             <h4 style="font-size:14px;font-weight:700;color:#111A6B;margin:0 0 16px;">اطلاعات تماس</h4>
             <div style="display:grid;gap:14px;">
                 @if($patient->phone)
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <div style="width:36px;height:36px;background:#EEF4FF;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:36px;height:36px;background:#EEF4FF;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E5BFF" stroke-width="2">
                             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
                         </svg>
@@ -245,7 +241,7 @@
                 @endif
                 @if($patient->email)
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <div style="width:36px;height:36px;background:#EDFAF6;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:36px;height:36px;background:#EDFAF6;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0E8F72" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                             <polyline points="22,6 12,13 2,6"/>

@@ -1,7 +1,7 @@
 <div dir="rtl">
 
     {{-- Toolbar --}}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+    <div class="history-toolbar" style="margin-bottom:16px;">
 
         {{-- Visit type filter --}}
         <select wire:model.live="visitTypeFilter" class="form-input" style="width:auto;">
@@ -34,7 +34,7 @@
 
         <div style="display:grid;gap:14px;">
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="grid-form-row">
                 <div>
                     <label class="field-label">تاریخ ویزیت <span style="color:#EF4444">*</span></label>
                     <input wire:model="visit_date" type="date" class="form-input" dir="ltr">
@@ -55,7 +55,7 @@
                 <input wire:model="chief_complaint" class="form-input" placeholder="دلیل مراجعه بیمار...">
             </div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="grid-form-row">
                 <div>
                     <label class="field-label">تشخیص</label>
                     <textarea wire:model="diagnosis" class="form-input" rows="3"
@@ -83,14 +83,14 @@
             <div>
                 <label class="field-label">تاریخ پیگیری</label>
                 <input wire:model="follow_up_date" type="date" class="form-input"
-                       style="width:220px;" dir="ltr">
+                       style="max-width:220px;" dir="ltr">
                 @error('follow_up_date') <p class="field-error">{{ $message }}</p> @enderror
             </div>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;">
-            <button class="btn-ghost" wire:click="$set('showForm', false)">انصراف</button>
-            <button class="btn-primary" wire:click="saveEntry" wire:loading.attr="disabled" wire:target="saveEntry">
+        <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap;">
+            <button class="btn-ghost" wire:click="$set('showForm', false)" style="flex:1;text-align:center;">انصراف</button>
+            <button class="btn-primary" wire:click="saveEntry" wire:loading.attr="disabled" wire:target="saveEntry" style="flex:1;justify-content:center;">
                 <span wire:loading.remove wire:target="saveEntry">ذخیره مراجعه</span>
                 <span wire:loading wire:target="saveEntry">در حال ذخیره...</span>
             </button>
@@ -119,7 +119,7 @@
                             <span style="font-size:12px;color:#6B7280;">— {{ $entry->chief_complaint }}</span>
                         @endif
                     </div>
-                    <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                         @if($entry->follow_up_date)
                             <span style="font-size:11px;background:#FEF9C3;color:#854D0E;padding:3px 10px;border-radius:20px;">
                                 پیگیری: {{ $entry->follow_up_date->format('Y/m/d') }}
@@ -135,7 +135,7 @@
                 </div>
 
                 {{-- Content grid --}}
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
                     @if($entry->diagnosis)
                     <div style="background:#F9FAFB;border-radius:10px;padding:12px;">
                         <p style="font-size:11px;font-weight:600;color:#9CA3AF;margin:0 0 6px;text-transform:uppercase;">تشخیص</p>
@@ -189,8 +189,4 @@
         در حال بارگذاری...
     </div>
 
-    <style>
-        .field-label { display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:6px; }
-        .field-error { font-size:11px;color:#EF4444;margin:4px 0 0; }
-    </style>
 </div>

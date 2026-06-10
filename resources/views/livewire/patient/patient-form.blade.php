@@ -1,7 +1,4 @@
 <div dir="rtl">
-    {{-- Trigger: listen for open-patient-form Alpine event --}}
-    <div x-data x-on:open-patient-form.window="$wire.openModal($event.detail?.id ?? null)"></div>
-
     @if($isOpen)
     <div class="modal-overlay open" style="z-index:250;">
         <div class="modal" style="max-width:520px;">
@@ -21,7 +18,7 @@
             <div style="display:grid;gap:16px;">
 
                 {{-- Name row --}}
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="grid-form-row">
                     <div>
                         <label class="field-label">نام <span style="color:#EF4444">*</span></label>
                         <input wire:model.blur="first_name" class="form-input" placeholder="علی">
@@ -39,7 +36,7 @@
                 </div>
 
                 {{-- National ID + DOB --}}
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="grid-form-row">
                     <div>
                         <label class="field-label">کد ملی</label>
                         <input wire:model.blur="national_id" class="form-input" placeholder="0012345678" dir="ltr" maxlength="10">
@@ -57,7 +54,7 @@
                 </div>
 
                 {{-- Gender + Blood type --}}
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="grid-form-row">
                     <div>
                         <label class="field-label">جنسیت <span style="color:#EF4444">*</span></label>
                         <select wire:model="gender" class="form-input">
@@ -77,7 +74,7 @@
                 </div>
 
                 {{-- Phone + Email --}}
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="grid-form-row">
                     <div>
                         <label class="field-label">شماره موبایل</label>
                         <input wire:model.blur="phone" class="form-input" placeholder="09123456789" dir="ltr">
@@ -110,7 +107,7 @@
                 {{-- Emergency contact --}}
                 <div style="background:#F9FAFB;border-radius:12px;padding:14px;">
                     <p style="font-size:12px;font-weight:600;color:#6B7280;margin:0 0 12px;">تماس اضطراری</p>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div class="grid-form-row">
                         <div>
                             <label class="field-label">نام</label>
                             <input wire:model="emergency_contact_name" class="form-input" placeholder="فاطمه محمدی">
@@ -141,9 +138,9 @@
             </div>
 
             {{-- Footer buttons --}}
-            <div style="display:flex;gap:10px;margin-top:24px;justify-content:flex-end;">
-                <button class="btn-ghost" wire:click="closeModal">انصراف</button>
-                <button class="btn-primary" wire:click="save" wire:loading.attr="disabled" wire:target="save">
+            <div style="display:flex;gap:10px;margin-top:24px;justify-content:flex-end;flex-wrap:wrap;">
+                <button class="btn-ghost" wire:click="closeModal" style="flex:1;text-align:center;">انصراف</button>
+                <button class="btn-primary" wire:click="save" wire:loading.attr="disabled" wire:target="save" style="flex:1;justify-content:center;">
                     <span wire:loading.remove wire:target="save">
                         {{ $patient ? 'ذخیره تغییرات' : 'ذخیره بیمار' }}
                     </span>
@@ -155,8 +152,4 @@
     </div>
     @endif
 
-    <style>
-        .field-label { display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:6px; }
-        .field-error { font-size:11px;color:#EF4444;margin:4px 0 0; }
-    </style>
 </div>

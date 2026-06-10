@@ -1,3 +1,400 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* ── Cards ─────────────────────────────────────────────────────────── */
+    .card {
+        @apply bg-white rounded-2xl shadow-sm;
+        box-shadow: 0 1px 3px rgba(17, 26, 107, 0.06), 0 1px 2px rgba(17, 26, 107, 0.04);
+    }
+
+    /* ── Badges ────────────────────────────────────────────────────────── */
+    .badge {
+        @apply inline-block text-xs font-semibold px-3 py-1 rounded-full;
+    }
+
+    /* ── Avatars ───────────────────────────────────────────────────────── */
+    .avatar {
+        @apply inline-flex items-center justify-center rounded-xl font-bold flex-shrink-0;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    /* ── Buttons ───────────────────────────────────────────────────────── */
+    .btn-primary {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white rounded-xl border-none cursor-pointer transition-all duration-150;
+        background: linear-gradient(135deg, #2E5BFF, #1A3FDB);
+        box-shadow: 0 4px 15px rgba(46, 91, 255, 0.25);
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #1A3FDB, #142DA8);
+        box-shadow: 0 6px 20px rgba(46, 91, 255, 0.35);
+    }
+    .btn-primary:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 8px rgba(46, 91, 255, 0.2);
+    }
+    .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-xl border cursor-pointer transition-all duration-150 bg-white text-gray-600;
+        border-color: #E5E7EB;
+    }
+    .btn-ghost:hover {
+        background: #F9FAFB;
+        border-color: #D1D5DB;
+    }
+
+    /* ── Form Inputs ───────────────────────────────────────────────────── */
+    .form-input {
+        @apply w-full px-3 py-2.5 text-sm rounded-xl border bg-white transition-all duration-150 outline-none;
+        border-color: #E5E7EB;
+        color: #111827;
+        font-family: 'Vazirmatn', 'Figtree', sans-serif;
+    }
+    .form-input:focus {
+        border-color: #2E5BFF;
+        box-shadow: 0 0 0 3px rgba(46, 91, 255, 0.1);
+    }
+    .form-input::placeholder {
+        color: #9CA3AF;
+    }
+
+    /* ── Modals ────────────────────────────────────────────────────────── */
+    .modal-overlay {
+        @apply fixed inset-0 flex items-center justify-center;
+        background: rgba(17, 26, 107, 0.4);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 200;
+    }
+    .modal-overlay.open {
+        opacity: 1;
+    }
+
+    .modal {
+        @apply bg-white rounded-2xl p-6 w-full relative;
+        box-shadow: 0 20px 60px rgba(17, 26, 107, 0.15);
+        animation: modal-in 0.25s ease forwards;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    @keyframes modal-in {
+        from {
+            opacity: 0;
+            transform: translateY(16px) scale(0.97);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* ── Data Table ────────────────────────────────────────────────────── */
+    .data-table {
+        border-collapse: collapse;
+    }
+    .data-table thead {
+        background: #F9FAFB;
+    }
+    .data-table th {
+        @apply text-xs font-semibold text-gray-500 uppercase tracking-wider;
+        padding: 12px 16px;
+        border-bottom: 1px solid #F3F4F6;
+        white-space: nowrap;
+    }
+    .data-table td {
+        @apply text-sm;
+        padding: 14px 16px;
+        border-bottom: 1px solid #F3F4F6;
+        vertical-align: middle;
+    }
+    .data-table tbody tr {
+        transition: background 0.15s;
+    }
+    .data-table tbody tr:hover {
+        background: #F8F9FF;
+    }
+
+    /* ── Responsive grid helpers ──────────────────────────────────────── */
+    .grid-2-col {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+        .grid-2-col {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .grid-form-row {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+    }
+    @media (min-width: 480px) {
+        .grid-form-row {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* ── Responsive table: hide on mobile, show card view ─────────────── */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-cards {
+        display: block;
+    }
+    .mobile-cards .desktop-row {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .mobile-cards {
+            display: none;
+        }
+        .mobile-cards + .table-wrapper,
+        .table-wrapper {
+            display: block;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .table-wrapper table {
+            display: none;
+        }
+        .mobile-cards {
+            display: block;
+        }
+    }
+
+    /* ── Mobile patient card ──────────────────────────────────────────── */
+    .patient-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(17, 26, 107, 0.06), 0 1px 2px rgba(17, 26, 107, 0.04);
+    }
+    .patient-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    .patient-card-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #F3F4F6;
+    }
+    .patient-card-meta-item {
+        font-size: 12px;
+        color: #6B7280;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .patient-card-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    /* ── Responsive tabs ──────────────────────────────────────────────── */
+    .tab-bar {
+        display: flex;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        border-radius: 14px;
+        box-shadow: 0 1px 4px rgba(17, 26, 107, 0.06);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tab-bar button {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 8px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: 'Vazirmatn', sans-serif;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+        .tab-bar button {
+            font-size: 11px;
+            padding: 8px 6px;
+        }
+    }
+
+    /* ── Responsive profile header ─────────────────────────────────────── */
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    @media (max-width: 640px) {
+        .profile-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .profile-header-actions {
+            width: 100%;
+        }
+        .profile-header-actions > div,
+        .profile-header-actions > a,
+        .profile-header-actions > button {
+            flex: 1;
+            justify-content: center;
+        }
+    }
+
+    /* ── Animations ────────────────────────────────────────────────────── */
+    .fade-up {
+        animation: fade-up 0.3s ease forwards;
+    }
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ── Field Labels (used in Livewire templates) ─────────────────────── */
+    .field-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #6B7280;
+        margin-bottom: 6px;
+    }
+
+    /* ── Field Errors (used in Livewire templates) ─────────────────────── */
+    .field-error {
+        font-size: 11px;
+        color: #EF4444;
+        margin: 4px 0 0;
+    }
+
+    /* ── Search bar responsive ─────────────────────────────────────────── */
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    @media (max-width: 640px) {
+        .search-bar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .search-bar > div,
+        .search-bar > select,
+        .search-bar > button {
+            width: 100%;
+        }
+    }
+
+    /* ── History toolbar responsive ────────────────────────────────────── */
+    .history-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    @media (max-width: 640px) {
+        .history-toolbar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .history-toolbar > select,
+        .history-toolbar > input {
+            width: 100% !important;
+        }
+        .history-toolbar > button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* ── Modal on small screens ────────────────────────────────────────── */
+    @media (max-width: 640px) {
+        .modal {
+            margin: 8px;
+            padding: 16px;
+            border-radius: 16px;
+            max-height: 95vh;
+        }
+        .modal-overlay {
+            padding: 0;
+            align-items: flex-end;
+        }
+        .modal-overlay .modal {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            max-height: 90vh;
+            animation: modal-slide-up 0.25s ease forwards;
+        }
+        @keyframes modal-slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    /* ── Dashboard responsive ──────────────────────────────────────────── */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    @media (min-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* ── Page container padding ────────────────────────────────────────── */
+    .page-container {
+        padding: 24px 0;
+    }
+    .page-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    @media (max-width: 640px) {
+        .page-container {
+            padding: 16px 0;
+        }
+        .page-inner {
+            padding: 0 16px;
+        }
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Livewire\Patient;
 use App\Models\Patient;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PatientForm extends Component
@@ -48,6 +49,12 @@ class PatientForm extends Component
             $this->fillForm($this->patient);
         }
         $this->isOpen = true;
+    }
+
+    #[On('open-patient-form')]
+    public function openModalViaEvent($id = null): void
+    {
+        $this->openModal($id ? (int) $id : null);
     }
 
     public function closeModal(): void

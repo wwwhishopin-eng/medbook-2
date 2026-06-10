@@ -1,31 +1,39 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100" dir="rtl">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                <div class="shrink-0 flex items-center gap-2">
+                    <a href="{{ route('patients.index') }}" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#2E5BFF,#1A3FDB);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                                <path d="M4.5 12.75l6 6 9-13.5"/>
+                            </svg>
+                        </div>
+                        <span style="font-size:16px;font-weight:800;color:#111A6B;font-family:'Vazirmatn',sans-serif;">MedBoard</span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                <div class="hidden space-x-8 sm:-my-px sm:mr-10 sm:flex" dir="rtl" style="gap:4px;">
+                    <x-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
+                        بیماران
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
+                        داشبورد
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+            <div class="hidden sm:flex sm:items-center sm:mr-6">
+                <x-dropdown align="left" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150" style="font-family:'Vazirmatn',sans-serif;">
                             <div>{{ Auth::user()->name }}</div>
 
-                            <div class="ms-1">
+                            <div class="mr-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
@@ -34,8 +42,8 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                        <x-dropdown-link :href="route('profile.edit')" style="font-family:'Vazirmatn',sans-serif;">
+                            پروفایل
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -44,8 +52,9 @@
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                                this.closest('form').submit();"
+                                    style="font-family:'Vazirmatn',sans-serif;">
+                                خروج
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -67,21 +76,24 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
+                بیماران
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
+                داشبورد
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-base text-gray-800" style="font-family:'Vazirmatn',sans-serif;">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                <x-responsive-nav-link :href="route('profile.edit')" style="font-family:'Vazirmatn',sans-serif;">
+                    پروفایل
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -90,8 +102,9 @@
 
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                                        this.closest('form').submit();"
+                            style="font-family:'Vazirmatn',sans-serif;">
+                        خروج
                     </x-responsive-nav-link>
                 </form>
             </div>
