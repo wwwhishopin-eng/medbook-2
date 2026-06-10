@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patient;
 
+use App\Helpers\Persian;
 use App\Models\Patient;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -20,7 +21,9 @@ class PatientSearch extends Component
             return;
         }
 
-        $this->results = Patient::search($this->query)
+        $searchTerm = Persian::toWestern($this->query);
+
+        $this->results = Patient::search($searchTerm)
             ->select('id', 'first_name', 'last_name', 'phone', 'avatar_color', 'status')
             ->limit(6)
             ->get()

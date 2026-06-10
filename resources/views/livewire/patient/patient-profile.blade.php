@@ -65,19 +65,19 @@
                     padding-top:20px;border-top:1px solid #F3F4F6;">
             <div style="text-align:center;">
                 <div style="font-size:22px;font-weight:700;color:#111A6B;">
-                    {{ $patient->medicalHistory->count() }}
+                    @fa($patient->medicalHistory->count())
                 </div>
                 <div style="font-size:12px;color:#9CA3AF;">مراجعه</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-size:22px;font-weight:700;color:#111A6B;">
-                    {{ $patient->appointments->count() }}
+                    @fa($patient->appointments->count())
                 </div>
                 <div style="font-size:12px;color:#9CA3AF;">نوبت</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-size:14px;font-weight:700;color:#111A6B;">
-                    {{ $patient->medicalHistory->first()?->visit_date?->format('Y/m/d') ?? '—' }}
+                    @fa($patient->medicalHistory->first()?->visit_date?->format('Y/m/d') ?? '—')
                 </div>
                 <div style="font-size:12px;color:#9CA3AF;">آخرین ویزیت</div>
             </div>
@@ -92,7 +92,7 @@
 
     {{-- Tabs --}}
     <div class="tab-bar" style="margin-bottom:16px;">
-        @foreach(['overview' => 'اطلاعات کلی', 'history' => 'سابقه پزشکی', 'conditions' => 'بیماری‌ها', 'contact' => 'تماس'] as $tab => $label)
+        @foreach(['overview' => 'اطلاعات کلی', 'appointments' => 'نوبت‌ها', 'history' => 'سابقه پزشکی', 'conditions' => 'بیماری‌ها', 'contact' => 'تماس'] as $tab => $label)
             <button wire:click="setTab('{{ $tab }}')"
                     style="font-weight:{{ $activeTab === $tab ? '600' : '400' }};
                            {{ $activeTab === $tab
@@ -196,6 +196,39 @@
     @if($activeTab === 'history')
     <div class="fade-up">
         @livewire('patient.patient-history', ['patient' => $patient], key('history-'.$patient->id))
+    </div>
+    @endif
+
+    {{-- Tab: Appointments --}}
+    @if($activeTab === 'appointments')
+    <div class="fade-up">
+        @forelse($patient->appointments->sortBy('start_at') as $appt)
+            <div class="card" style="padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                <div style="width:56px;text-align:center;flex-shrink:0;">
+                    <div style="font-size:20px;font-weight:700;color:#2E5BFF;">{{ $appt->start_at->format('d') }}</div>
+                    <div style="font-size:11px;color:#9CA3AF;">{{ $appt->start_at->format('M') }}</div>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:#111827;">{{ $appt->title }}</div>
+                    <div style="font-size:12px;color:#6B7280;">
+                        {{ $appt->type_label }}
+                        <span dir="ltr" style="margin-right:8px;">{{ $appt->start_at->format('H:i') }}</span>
+                    </div>
+                </div>
+                <span class="badge" style="{{ $appt->status_badge_style }};font-size:12px;">
+                    {{ $appt->status_label }}
+                </span>
+                @if($appt->notes)
+                <div style="width:100%;font-size:12px;color:#9CA3AF;padding-top:8px;border-top:1px solid #F3F4F6;margin-top:4px;">
+                    {{ $appt->notes }}
+                </div>
+                @endif
+            </div>
+        @empty
+            <div class="card" style="padding:40px;text-align:center;">
+                <p style="font-size:14px;color:#9CA3AF;margin:0;">نوبتی برای این بیمار ثبت نشده است.</p>
+            </div>
+        @endforelse
     </div>
     @endif
 

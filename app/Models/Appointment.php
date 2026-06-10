@@ -31,16 +31,29 @@ class Appointment extends Model
 
     // ── Constants ─────────────────────────────────────────────────────────────
 
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_CANCELLED = 'cancelled';
-    const STATUS_NO_SHOW   = 'no_show';
+    const STATUS_RESERVED   = 'reserved';
+    const STATUS_CONFIRMED  = 'confirmed';
+    const STATUS_ARRIVED    = 'arrived';
+    const STATUS_COMPLETED  = 'completed';
+    const STATUS_CANCELLED  = 'cancelled';
+    const STATUS_NO_SHOW    = 'no_show';
 
     const STATUSES = [
-        self::STATUS_SCHEDULED => 'رزرو شده',
+        self::STATUS_RESERVED  => 'رزرو شده',
+        self::STATUS_CONFIRMED => 'تایید شده',
+        self::STATUS_ARRIVED   => 'حاضر',
         self::STATUS_COMPLETED => 'انجام شده',
         self::STATUS_CANCELLED => 'لغو شده',
         self::STATUS_NO_SHOW   => 'غایب',
+    ];
+
+    const STATUS_COLORS = [
+        self::STATUS_RESERVED  => 'yellow',
+        self::STATUS_CONFIRMED => 'green',
+        self::STATUS_ARRIVED   => 'blue',
+        self::STATUS_COMPLETED => 'green',
+        self::STATUS_CANCELLED => 'red',
+        self::STATUS_NO_SHOW   => 'gray',
     ];
 
     const TYPES = [
@@ -58,9 +71,25 @@ class Appointment extends Model
         return self::STATUSES[$this->status] ?? $this->status;
     }
 
+    public function getStatusColorAttribute(): string
+    {
+        return self::STATUS_COLORS[$this->status] ?? 'gray';
+    }
+
     public function getTypeLabelAttribute(): string
     {
         return self::TYPES[$this->type] ?? $this->type;
+    }
+
+    public function getStatusBadgeStyleAttribute(): string
+    {
+        return match ($this->status_color) {
+            'green'  => 'background:#DCFCE7;color:#15803D',
+            'yellow' => 'background:#FEF9C3;color:#854D0E',
+            'blue'   => 'background:#EEF4FF;color:#1D4ED8',
+            'red'    => 'background:#FEE2E2;color:#991B1B',
+            default  => 'background:#F3F4F6;color:#6B7280',
+        };
     }
 
     // ── Relationships ─────────────────────────────────────────────────────────
@@ -80,7 +109,7 @@ class Appointment extends Model
     public function scopeUpcoming(Builder $query): Builder
     {
         return $query->where('start_at', '>=', now())
-                     ->where('status', self::STATUS_SCHEDULED);
+                     ->whereIn('status', [self::STATUS_RESERVED, self::STATUS_CONFIRMED]);
     }
 
     public function scopeToday(Builder $query): Builder
@@ -90,6 +119,6 @@ class Appointment extends Model
 
     public function scopeScheduled(Builder $query): Builder
     {
-        return $query->where('status', self::STATUS_SCHEDULED);
+        return $query->whereIn('status', [self::STATUS_RESERVED, self::STATUS_CONFIRMED]);
     }
 }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->dateTime('start_at');
             $table->dateTime('end_at')->nullable();
 
-            $table->enum('status', ['scheduled', 'completed', 'cancelled', 'no_show'])
-                  ->default('scheduled')
+            $table->enum('status', ['reserved', 'confirmed', 'arrived', 'completed', 'cancelled', 'no_show'])
+                  ->default('reserved')
                   ->index();
 
             $table->enum('type', ['checkup', 'follow_up', 'lab', 'consultation', 'emergency'])

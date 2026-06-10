@@ -21,19 +21,19 @@
 
                     <div style="background:#fff;border-radius:10px;padding:8px 16px;box-shadow:0 1px 4px rgba(17,26,107,0.07);
                                 display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:18px;font-weight:800;color:#111A6B;">{{ $total }}</span>
+                        <span style="font-size:18px;font-weight:800;color:#111A6B;">@fa($total)</span>
                         <span style="font-size:12px;color:#9CA3AF;">کل بیماران</span>
                     </div>
 
                     <div style="background:#DCFCE7;border-radius:10px;padding:8px 16px;
                                 display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:18px;font-weight:800;color:#15803D;">{{ $active }}</span>
+                        <span style="font-size:18px;font-weight:800;color:#15803D;">@fa($active)</span>
                         <span style="font-size:12px;color:#15803D;">فعال</span>
                     </div>
 
                     <div style="background:#FEF9C3;border-radius:10px;padding:8px 16px;
                                 display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:18px;font-weight:800;color:#854D0E;">{{ $pending }}</span>
+                        <span style="font-size:18px;font-weight:800;color:#854D0E;">@fa($pending)</span>
                         <span style="font-size:12px;color:#854D0E;">در انتظار</span>
                     </div>
                 </div>

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Helpers\Persian;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -10,6 +12,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Livewire v4 auto-discovers components from app/Livewire/
+        Blade::directive('fa', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::digits($expr); ?>");
+        Blade::directive('faCurrency', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::currency($expr); ?>");
+        Blade::directive('faDate', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::date($expr); ?>");
     }
 }

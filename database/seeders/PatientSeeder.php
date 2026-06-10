@@ -148,7 +148,7 @@ class PatientSeeder extends Seeder
                 'title'      => 'ویزیت دوره‌ای',
                 'start_at'   => now()->addDays(rand(1, 30)),
                 'end_at'     => now()->addDays(rand(1, 30))->addMinutes(30),
-                'status'     => 'scheduled',
+                'status'     => 'reserved',
                 'type'       => 'follow_up',
             ]);
         }

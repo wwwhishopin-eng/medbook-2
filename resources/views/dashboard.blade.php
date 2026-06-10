@@ -14,6 +14,8 @@
                 $activePatients  = \App\Models\Patient::where('status', 'active')->count();
                 $pendingPatients = \App\Models\Patient::where('status', 'pending')->count();
                 $upcomingAppointments = \App\Models\Appointment::upcoming()->count();
+                $todayAppointments = \App\Models\Appointment::today()->count();
+                $todayCompleted = \App\Models\Appointment::today()->where('status', 'completed')->count();
                 $recentPatients = \App\Models\Patient::latest()->limit(5)->get();
                 $upcomingVisits = \App\Models\Appointment::with('patient')
                     ->upcoming()
@@ -36,7 +38,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div style="font-size:28px;font-weight:800;color:#111A6B;">{{ $totalPatients }}</div>
+                            <div style="font-size:28px;font-weight:800;color:#111A6B;">@fa($totalPatients)</div>
                             <div style="font-size:12px;color:#9CA3AF;">کل بیماران</div>
                         </div>
                     </div>
@@ -52,7 +54,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div style="font-size:28px;font-weight:800;color:#15803D;">{{ $activePatients }}</div>
+                            <div style="font-size:28px;font-weight:800;color:#15803D;">@fa($activePatients)</div>
                             <div style="font-size:12px;color:#9CA3AF;">فعال</div>
                         </div>
                     </div>
@@ -68,7 +70,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div style="font-size:28px;font-weight:800;color:#854D0E;">{{ $pendingPatients }}</div>
+                            <div style="font-size:28px;font-weight:800;color:#854D0E;">@fa($pendingPatients)</div>
                             <div style="font-size:12px;color:#9CA3AF;">در انتظار</div>
                         </div>
                     </div>
@@ -86,8 +88,24 @@
                             </svg>
                         </div>
                         <div>
-                            <div style="font-size:28px;font-weight:800;color:#2E5BFF;">{{ $upcomingAppointments }}</div>
+                            <div style="font-size:28px;font-weight:800;color:#2E5BFF;">@fa($upcomingAppointments)</div>
                             <div style="font-size:12px;color:#9CA3AF;">نوبت آینده</div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Today's Appointments --}}
+                <div class="card" style="padding:20px;">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E8F72" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div style="font-size:28px;font-weight:800;color:#0E8F72;">@fa($todayAppointments)</div>
+                            <div style="font-size:12px;color:#9CA3AF;">نوبت امروز</div>
                         </div>
                     </div>
                 </div>
@@ -149,6 +167,9 @@
                                     <span dir="ltr" style="margin-right:6px;">{{ $appt->start_at->format('H:i') }}</span>
                                 </div>
                             </div>
+                            <span class="badge" style="{{ $appt->status_badge_style }};font-size:11px;">
+                                {{ $appt->status_label }}
+                            </span>
                             <span class="badge" style="background:#EEF4FF;color:#2E5BFF;font-size:11px;">
                                 {{ $appt->type_label }}
                             </span>

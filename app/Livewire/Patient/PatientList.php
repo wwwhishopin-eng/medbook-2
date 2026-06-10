@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patient;
 
+use App\Helpers\Persian;
 use App\Models\Patient;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
@@ -99,8 +100,10 @@ class PatientList extends Component
         $allowedSortFields = ['first_name', 'last_name', 'date_of_birth', 'status', 'created_at'];
         $sortField = in_array($this->sortField, $allowedSortFields) ? $this->sortField : 'created_at';
 
+        $searchTerm = Persian::toWestern($this->search);
+
         $patients = Patient::query()
-            ->when($this->search, fn ($q) => $q->search($this->search))
+            ->when($searchTerm, fn ($q) => $q->search($searchTerm))
             ->when($this->statusFilter, fn ($q) => $q->status($this->statusFilter))
             ->orderBy($sortField, $this->sortDir)
             ->paginate($this->perPage);
