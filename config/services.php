@@ -35,4 +35,26 @@ return [
         ],
     ],
 
+    'sms' => [
+        'provider' => env('SMS_PROVIDER', 'kavenegar'),
+    ],
+
+    'kavenegar' => [
+        'api_key' => env('KAVENEGAR_API_KEY'),
+        'sender' => env('KAVENEGAR_SENDER'),
+        'voice_template' => env('KAVENEGAR_VOICE_TEMPLATE', 'appointment_reminder'),
+    ],
+
+    'smsir' => [
+        'api_key' => env('SMSIR_API_KEY'),
+        'line_number' => env('SMSIR_LINE_NUMBER'),
+        'user_key' => env('SMSIR_USER_KEY'),
+        'secret_key' => env('SMSIR_SECRET_KEY'),
+    ],
+
+    'subscription' => [
+        'trial_days' => env('SUBSCRIPTION_TRIAL_DAYS', 14),
+        'grace_period_days' => env('SUBSCRIPTION_GRACE_PERIOD_DAYS', 3),
+    ],
+
 ];

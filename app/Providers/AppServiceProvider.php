@@ -15,5 +15,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('fa', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::digits($expr); ?>");
         Blade::directive('faCurrency', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::currency($expr); ?>");
         Blade::directive('faDate', fn ($expr) => "<?php echo \\App\\Helpers\\Persian::date($expr); ?>");
+        Blade::directive('jalali', fn ($expr) => "<?php echo \\App\\Helpers\\JalaliDate::format($expr); ?>");
+        Blade::directive('jalaliFull', fn ($expr) => "<?php echo \\App\\Helpers\\JalaliDate::format($expr, 'Y/m/d - H:i'); ?>");
+        Blade::directive('jalaliDate', fn ($expr) => "<?php echo \\App\\Helpers\\JalaliDate::format($expr, 'Y/m/d'); ?>");
     }
 }
