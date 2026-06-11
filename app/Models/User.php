@@ -53,10 +53,15 @@ class User extends Authenticatable
         return self::ROLES[$this->role] ?? $this->role;
     }
 
-    public function can(string $permission): bool
+    public function can($abilities, $arguments = []): bool
     {
-        $permissions = $this->getPermissions();
-        return in_array($permission, $permissions);
+        // Handle simple string permission checks against your role-based permissions
+        if (is_string($abilities) && empty($arguments)) {
+            return in_array($abilities, $this->getPermissions());
+        }
+
+        // Fall back to Laravel's default Gate/Policy handling for everything else
+        return parent::can($abilities, $arguments);
     }
 
     public function getPermissions(): array

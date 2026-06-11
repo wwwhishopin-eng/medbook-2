@@ -17,6 +17,8 @@ Smart Slot Suggestion	NOT IMPLEMENTED
 Quick Booking (< 3 clicks)	NOT IMPLEMENTED
 Appointment Reminders (SMS/Call)	NOT IMPLEMENTED
 Patient Confirmation via SMS	NOT IMPLEMENTED
+
+
 Appointment Color System	NOT IMPLEMENTED
 Daily/Weekly/Monthly Calendar Views	NOT IMPLEMENTED
 Queue Management	NOT IMPLEMENTED

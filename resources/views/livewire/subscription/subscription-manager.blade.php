@@ -46,7 +46,7 @@
                         <div>
                             <h4 style="font-size:14px;font-weight:700;color:#92400E;margin:0;">هدرد!</h4>
                             <p style="font-size:13px;color:#78350F;margin:4px 0 0;">
-                                تنها <strong>@fa({{ $expStatus['days_remaining'] }})</strong> روز تا انقضای اشتراک باقی مانده!
+                               تنها <strong>@fa($expStatus['days_remaining'])</strong> روز تا انقضای اشتراک باقی مانده!
                             </p>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
                         <p style="font-size:13px;color:#1E40AF;margin:0;">
-                            <strong>@fa({{ $expStatus['days_remaining'] }})</strong> روز تا انقضای اشتراک باقی مانده.
+                            تنها <strong>@fa($expStatus['days_remaining'])</strong> روز تا انقضای اشتراک باقی مانده!
                         </p>
                     </div>
                 </div>
@@ -131,15 +131,15 @@
 
                         <div style="margin-bottom:16px;">
                             <div style="font-size:12px;color:#9CA3AF;">شهریه ماهانه</div>
-                            <div style="font-size:22px;font-weight:800;color:#111A6B;">
-                                @faCurrency({{ $plan['price_monthly'] }})
-                            </div>
+                                <div style="font-size:22px;font-weight:800;color:#111A6B;">
+                                    @faCurrency($plan['price_monthly'])
+                                </div>
                         </div>
 
                         <div style="margin-bottom:20px;opacity:0.7;">
                             <div style="font-size:12px;color:#6B7280;">سالانه</div>
                             <div style="font-size:14px;font-weight:600;color:#111A6B;">
-                                @faCurrency({{ $plan['price_yearly'] }})
+                                @faCurrency( $plan['price_yearly'] )
                             </div>
                         </div>
 
@@ -205,14 +205,14 @@
                             class="{{ $selectedPeriod === 'monthly' ? 'btn-primary' : 'btn-ghost' }}"
                             style="flex-direction:column;align-items:center;">
                         <span style="font-size:13px;">ماهانه</span>
-                        <span style="font-size:12px;opacity:0.8;">@faCurrency({{ $monthlyPrice }})</span>
+                        <span style="font-size:12px;opacity:0.8;">@faCurrency( $monthlyPrice )</span>
                     </button>
                     <button type="button"
                             wire:click="$set('selectedPeriod', 'yearly')"
                             class="{{ $selectedPeriod === 'yearly' ? 'btn-primary' : 'btn-ghost' }}"
                             style="flex-direction:column;align-items:center;">
                         <span style="font-size:13px;">سالانه</span>
-                        <span style="font-size:12px;opacity:0.8;">@faCurrency({{ $yearlyPrice }})</span>
+                        <span style="font-size:12px;opacity:0.8;">@faCurrency( $yearlyPrice )</span>
                     </button>
                 </div>
             </div>
