@@ -8,6 +8,8 @@ Voice Call Reminders (Kavenegar Voice)	NOT IMPLEMENTED
 Subscription/License System	NOT IMPLEMENTED
 System Lock on Expiration	NOT IMPLEMENTED
 Expiration Alerts	NOT IMPLEMENTED
+
+
 Operator Role / Permissions	NOT IMPLEMENTED
 Doctor Role / Permissions	NOT IMPLEMENTED
 Waiting List	NOT IMPLEMENTED
