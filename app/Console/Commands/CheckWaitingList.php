@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\WaitingList;
 use App\Models\Appointment;
-use App\Services\SmsService;
+use App\Services\SMS\SmsService;
 use App\Services\SlotSuggestionService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;

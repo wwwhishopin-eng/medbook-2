@@ -7,7 +7,7 @@ use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\WaitingList;
 use App\Services\SlotSuggestionService;
-use App\Services\SmsService;
+use App\Services\SMS\SmsService;
 use App\Models\SmsConfirmation;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;

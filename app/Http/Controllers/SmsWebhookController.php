@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SmsConfirmation;
 use App\Models\Appointment;
-use App\Services\SmsService;
+use App\Services\SMS\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

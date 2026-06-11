@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\ReminderService;
 use App\Models\Subscription;
-use App\Services\SmsService;
+use App\Services\SMS\SmsService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 

@@ -5,7 +5,7 @@ namespace App\Livewire\WaitingList;
 use App\Models\WaitingList;
 use App\Models\Appointment;
 use App\Services\SlotSuggestionService;
-use App\Services\SmsService;
+use App\Services\SMS\SmsService;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
