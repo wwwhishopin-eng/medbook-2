@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Patient extends Model
 {
-    use HasFactory, SoftDeletes, HasUuids;
-
-    protected $keyType = 'string';
-    public $incrementing = false;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'first_name',
