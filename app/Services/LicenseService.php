@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Subscription;
+use App\Models\SubscriptionPlan;
 use App\Models\User;
 use App\Helpers\JalaliDate;
 use Illuminate\Support\Facades\Cache;
@@ -44,6 +45,14 @@ class LicenseService
 
     public function isValidLicense(): bool
     {
+        // In local development, be more lenient
+        if (app()->environment('local', 'development', 'testing')) {
+            $subscription = $this->getActiveSubscription();
+            if (!$subscription) {
+                return true; // Allow access in development without subscription
+            }
+        }
+
         $subscription = $this->getActiveSubscription();
 
         if (!$subscription) {
@@ -64,6 +73,11 @@ class LicenseService
 
     public function isSystemLocked(): bool
     {
+        // Never lock in local development
+        if (app()->environment('local', 'development', 'testing')) {
+            return false;
+        }
+
         return !$this->isValidLicense();
     }
 
@@ -72,12 +86,16 @@ class LicenseService
         $subscription = $this->getActiveSubscription();
 
         if (!$subscription) {
+            // In development, show a default value
+            if (app()->environment('local', 'development', 'testing')) {
+                return 30;
+            }
             return 0;
         }
 
         if ($subscription->isExpired()) {
             $graceDays = $this->getGracePeriodRemaining();
-            return -$graceDays; // Negative to indicate past expiration
+            return -$graceDays;
         }
 
         return $subscription->daysRemaining();
@@ -130,6 +148,11 @@ class LicenseService
 
     private function isWithinGracePeriod(): bool
     {
+        // In development, always allow
+        if (app()->environment('local', 'development', 'testing')) {
+            return true;
+        }
+
         $subscription = Subscription::query()
             ->where('user_id', auth()->id())
             ->orderByDesc('id')
@@ -159,7 +182,7 @@ class LicenseService
 
     public function createTrialSubscription(User $user, int $days = 14): Subscription
     {
-        $plan = Subscription::where('slug', 'basic')->first()
+        $plan = SubscriptionPlan::where('slug', 'professional')->first()
             ?? SubscriptionPlan::where('is_active', true)->first();
 
         if (!$plan) {

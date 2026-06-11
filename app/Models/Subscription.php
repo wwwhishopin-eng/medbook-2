@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Helpers\JalaliDate;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\Carbon;
@@ -12,10 +11,7 @@ use Illuminate\Support\Str;
 
 class Subscription extends Model
 {
-    use HasFactory, HasUuids;
-
-    protected $keyType = 'string';
-    public $incrementing = false;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',
@@ -154,7 +150,7 @@ class Subscription extends Model
         return self::STATUS_COLORS[$this->status] ?? 'secondary';
     }
 
-    public static function getActiveSubscriptionForUser(string $userId): ?self
+    public static function getActiveSubscriptionForUser(int $userId): ?self
     {
         return static::query()
             ->where('user_id', $userId)
