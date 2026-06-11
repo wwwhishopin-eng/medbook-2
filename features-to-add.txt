@@ -1,0 +1,37 @@
+ABSENT
+Feature	Status
+Jalali/Shamsi Calendar	NOT IMPLEMENTED
+SMS Integration (Kavenegar/SMS.ir)	NOT IMPLEMENTED
+Voice Call Reminders (Kavenegar Voice)	NOT IMPLEMENTED
+Subscription/License System	NOT IMPLEMENTED
+System Lock on Expiration	NOT IMPLEMENTED
+Expiration Alerts	NOT IMPLEMENTED
+Operator Role / Permissions	NOT IMPLEMENTED
+Doctor Role / Permissions	NOT IMPLEMENTED
+Waiting List	NOT IMPLEMENTED
+Smart Slot Suggestion	NOT IMPLEMENTED
+Quick Booking (< 3 clicks)	NOT IMPLEMENTED
+Appointment Reminders (SMS/Call)	NOT IMPLEMENTED
+Patient Confirmation via SMS	NOT IMPLEMENTED
+Appointment Color System	NOT IMPLEMENTED
+Daily/Weekly/Monthly Calendar Views	NOT IMPLEMENTED
+Queue Management	NOT IMPLEMENTED
+Waiting Room Display Screen	NOT IMPLEMENTED
+Financial/Debt Tracking	NOT IMPLEMENTED
+Debtor List Dashboard	NOT IMPLEMENTED
+Debt Warning on Booking	NOT IMPLEMENTED
+AI Voice-to-Report	NOT IMPLEMENTED
+Follow-up Appointment Suggestion	NOT IMPLEMENTED
+Online Booking Page (public)	NOT IMPLEMENTED
+PWA Support	NOT IMPLEMENTED
+Push Notifications	NOT IMPLEMENTED
+Audit/Activity Logs	NOT IMPLEMENTED
+Comprehensive REST API	NOT IMPLEMENTED
+Persian Number Formatting	NOT IMPLEMENTED
+Persian Currency Formatting	NOT IMPLEMENTED
+Persian Auth Page Translations	NOT IMPLEMENTED
+Data Encryption	NOT IMPLEMENTED
+Secure File Uploads	NOT IMPLEMENTED
+Rate Limiting (beyond login)	NOT IMPLEMENTED
+Redis (for queues/cache)	NOT IMPLEMENTED
+S3 Storage	CONFIGURED BUT UNUSED
