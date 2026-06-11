@@ -17,8 +17,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:mr-10 sm:flex" dir="rtl" style="gap:4px;">
+                    <x-nav-link :href="route('appointments.quick')" :active="request()->routeIs('appointments.quick')" style="font-family:'Vazirmatn',sans-serif;">
+                        ثبت نوبت
+                    </x-nav-link>
                     <x-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
                         بیماران
+                    </x-nav-link>
+                    <x-nav-link :href="route('waiting-list.index')" :active="request()->routeIs('waiting-list.*')" style="font-family:'Vazirmatn',sans-serif;">
+                        لیست انتظار
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
                         داشبورد
@@ -80,8 +86,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('appointments.quick')" :active="request()->routeIs('appointments.quick')" style="font-family:'Vazirmatn',sans-serif;">
+                ثبت نوبت
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
                 بیماران
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('waiting-list.index')" :active="request()->routeIs('waiting-list.*')" style="font-family:'Vazirmatn',sans-serif;">
+                لیست انتظار
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
                 داشبورد

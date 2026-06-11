@@ -20,3 +20,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/../routes/patients.php';
 require __DIR__.'/../routes/subscription.php';
+require __DIR__.'/../routes/appointments.php';
