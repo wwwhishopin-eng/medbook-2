@@ -150,7 +150,7 @@
     @endif
 
     {{-- Step 3: Confirm --}}
-    @if($patient && $selected_slot)
+    @if(($patient || $showNewPatientForm) && $selected_slot)
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn-primary" wire:click="createQuickAppointment"
                 style="flex:1;justify-content:center;">
