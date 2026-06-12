@@ -26,6 +26,8 @@ Waiting Room Display Screen	NOT IMPLEMENTED
 Financial/Debt Tracking	NOT IMPLEMENTED
 Debtor List Dashboard	NOT IMPLEMENTED
 Debt Warning on Booking	NOT IMPLEMENTED
+
+
 AI Voice-to-Report	NOT IMPLEMENTED
 Follow-up Appointment Suggestion	NOT IMPLEMENTED
 Online Booking Page (public)	NOT IMPLEMENTED

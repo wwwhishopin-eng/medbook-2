@@ -51,11 +51,11 @@
     <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
         @foreach([
             'confirmed' => ['رزرو تایید شده', '#DCFCE7', '#15803D'],
-            'reserved' => ['در انتظار تایید', '#FEF9C3', '#854D0E'],
-            'arrived' => ['حاضر', '#DBEAFE', '#1D4ED8'],
-            'completed' => ['انجام شده', '#F0FDF4', '#15803D'],
-            'cancelled' => ['لغو شده', '#FEE2E2', '#991B1B'],
-            'no_show' => ['غایب', '#F3F4F6', '#6B7280'],
+            'reserved'  => ['در انتظار تایید', '#FEF9C3', '#854D0E'],
+            'arrived'   => ['حاضر',            '#DBEAFE', '#1D4ED8'],
+            'completed' => ['انجام شده',        '#F0FDF4', '#15803D'],
+            'cancelled' => ['لغو شده',          '#FEE2E2', '#991B1B'],
+            'no_show'   => ['غایب',             '#F3F4F6', '#6B7280'],
         ] as $status => $info)
             <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#6B7280;">
                 <div style="width:10px;height:10px;border-radius:50%;background:{{ $info[1] }};border:2px solid {{ $info[2] }};"></div>
@@ -63,6 +63,34 @@
             </div>
         @endforeach
     </div>
+
+    {{-- Shared color helper macro --}}
+    @php
+        $statusBg = fn($s) => match($s) {
+            'confirmed' => '#DCFCE7',
+            'reserved'  => '#FEF9C3',
+            'arrived'   => '#DBEAFE',
+            'completed' => '#F0FDF4',
+            'cancelled' => '#FEE2E2',
+            default     => '#F3F4F6',
+        };
+        $statusBorder = fn($s) => match($s) {
+            'confirmed' => '#15803D',
+            'reserved'  => '#D97706',
+            'arrived'   => '#1D4ED8',
+            'completed' => '#15803D',
+            'cancelled' => '#DC2626',
+            default     => '#6B7280',
+        };
+        $statusColor = fn($s) => match($s) {
+            'confirmed' => '#15803D',
+            'reserved'  => '#D97706',
+            'arrived'   => '#1D4ED8',
+            'completed' => '#15803D',
+            'cancelled' => '#DC2626',
+            default     => '#6B7280',
+        };
+    @endphp
 
     {{-- Daily View --}}
     @if($view === 'daily')
@@ -75,18 +103,16 @@
                     });
                 @endphp
                 <div style="display:flex;border-bottom:1px solid #F3F4F6;min-height:60px;">
-                    {{-- Time label --}}
                     <div style="width:70px;padding:10px;text-align:center;border-left:1px solid #F3F4F6;flex-shrink:0;">
                         <span style="font-size:13px;font-weight:600;color:#6B7280;" dir="ltr">{{ $hour }}</span>
                     </div>
-                    {{-- Appointments in this hour --}}
                     <div style="flex:1;padding:8px;display:flex;flex-wrap:wrap;gap:6px;">
                         @foreach($hourAppointments as $appt)
                             <a href="{{ route('patients.show', $appt->patient_id) }}"
                                style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
                                       text-decoration:none;color:inherit;min-width:180px;flex:1;
-                                      background:{{ $appt->status === 'confirmed' ? '#DCFCE7' : ($appt->status === 'reserved' ? '#FEF9C3' : ($appt->status === 'arrived' ? '#DBEAFE' : ($appt->status === 'completed' ? '#F0FDF4' : ($appt->status === 'cancelled' ? '#FEE2E2' : '#F3F4F6'))) }};
-                                      border-right:3px solid {{ $appt->status === 'confirmed' ? '#15803D' : ($appt->status === 'reserved' ? '#D97706' : ($appt->status === 'arrived' ? '#1D4ED8' : ($appt->status === 'completed' ? '#15803D' : ($appt->status === 'cancelled' ? '#DC2626' : '#6B7280'))) }};">
+                                      background:{{ $statusBg($appt->status) }};
+                                      border-right:3px solid {{ $statusBorder($appt->status) }};">
                                 <div class="avatar"
                                      style="background:{{ $appt->patient->avatar_color }}22;color:{{ $appt->patient->avatar_color }};
                                             width:32px;height:32px;font-size:12px;">
@@ -96,9 +122,9 @@
                                     <div style="font-size:13px;font-weight:600;color:#111827;">{{ $appt->patient->full_name }}</div>
                                     <div style="font-size:11px;color:#6B7280;">{{ $appt->type_label }} • {{ $appt->title }}</div>
                                 </div>
-                                <span style="font-size:11px;font-weight:600;
-                                             color:{{ $appt->status === 'confirmed' ? '#15803D' : ($appt->status === 'reserved' ? '#D97706' : ($appt->status === 'arrived' ? '#1D4ED8' : ($appt->status === 'completed' ? '#15803D' : ($appt->status === 'cancelled' ? '#DC2626' : '#6B7280'))) }};
-                                             ">{{ $appt->status_label }}</span>
+                                <span style="font-size:11px;font-weight:600;color:{{ $statusColor($appt->status) }};">
+                                    {{ $appt->status_label }}
+                                </span>
                             </a>
                         @endforeach
                     </div>
@@ -116,7 +142,8 @@
                     <tr style="background:#F9FAFB;">
                         <th style="padding:10px;font-size:12px;font-weight:600;color:#9CA3AF;text-align:center;width:60px;border-bottom:1px solid #F3F4F6;">ساعت</th>
                         @foreach($days as $day)
-                            <th style="padding:10px;font-size:12px;font-weight:600;color:{{ $day['is_today'] ? '#2E5BFF' : '#9CA3AF' }};
+                            <th style="padding:10px;font-size:12px;font-weight:600;
+                                       color:{{ $day['is_today'] ? '#2E5BFF' : '#9CA3AF' }};
                                        text-align:center;border-bottom:1px solid #F3F4F6;
                                        {{ $day['is_today'] ? 'background:#EEF4FF;' : '' }}">
                                 <div>{{ $day['day_name'] }}</div>
@@ -142,8 +169,8 @@
                                         <a href="{{ route('patients.show', $appt->patient_id) }}"
                                            style="display:block;padding:4px 6px;border-radius:6px;margin-bottom:3px;
                                                   text-decoration:none;font-size:10px;line-height:1.3;
-                                                  background:{{ $appt->status === 'confirmed' ? '#DCFCE7' : ($appt->status === 'reserved' ? '#FEF9C3' : ($appt->status === 'arrived' ? '#DBEAFE' : ($appt->status === 'completed' ? '#F0FDF4' : ($appt->status === 'cancelled' ? '#FEE2E2' : '#F3F4F6'))) }};
-                                                  border-right:2px solid {{ $appt->status === 'confirmed' ? '#15803D' : ($appt->status === 'reserved' ? '#D97706' : ($appt->status === 'arrived' ? '#1D4ED8' : ($appt->status === 'cancelled' ? '#DC2626' : '#6B7280'))) }};
+                                                  background:{{ $statusBg($appt->status) }};
+                                                  border-right:2px solid {{ $statusBorder($appt->status) }};
                                                   color:#111827;">
                                             {{ $appt->patient->full_name }}
                                             <div style="color:#6B7280;" dir="ltr">{{ $appt->start_at->format('H:i') }}</div>
@@ -192,7 +219,7 @@
                                         <a href="{{ route('patients.show', $appt->patient_id) }}"
                                            style="display:block;padding:2px 6px;border-radius:4px;margin-bottom:2px;
                                                   text-decoration:none;font-size:10px;line-height:1.3;
-                                                  background:{{ $appt->status === 'confirmed' ? '#DCFCE7' : ($appt->status === 'reserved' ? '#FEF9C3' : ($appt->status === 'arrived' ? '#DBEAFE' : ($appt->status === 'cancelled' ? '#FEE2E2' : '#F3F4F6'))) }};
+                                                  background:{{ $statusBg($appt->status) }};
                                                   color:#111827;">
                                             <span dir="ltr">{{ $appt->start_at->format('H:i') }}</span>
                                             {{ $appt->patient->avatar_initial }} {{ $appt->patient->full_name }}
