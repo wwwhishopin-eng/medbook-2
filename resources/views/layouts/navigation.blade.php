@@ -20,8 +20,17 @@
                     <x-nav-link :href="route('appointments.quick')" :active="request()->routeIs('appointments.quick')" style="font-family:'Vazirmatn',sans-serif;">
                         ثبت نوبت
                     </x-nav-link>
+                    <x-nav-link :href="route('appointments.calendar')" :active="request()->routeIs('appointments.calendar')" style="font-family:'Vazirmatn',sans-serif;">
+                        تقویم
+                    </x-nav-link>
                     <x-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
                         بیماران
+                    </x-nav-link>
+                    <x-nav-link :href="route('queue.index')" :active="request()->routeIs('queue.*')" style="font-family:'Vazirmatn',sans-serif;">
+                        صف
+                    </x-nav-link>
+                    <x-nav-link :href="route('financial.debtors')" :active="request()->routeIs('financial.*')" style="font-family:'Vazirmatn',sans-serif;">
+                        بدهکاران
                     </x-nav-link>
                     <x-nav-link :href="route('waiting-list.index')" :active="request()->routeIs('waiting-list.*')" style="font-family:'Vazirmatn',sans-serif;">
                         لیست انتظار
@@ -89,8 +98,17 @@
             <x-responsive-nav-link :href="route('appointments.quick')" :active="request()->routeIs('appointments.quick')" style="font-family:'Vazirmatn',sans-serif;">
                 ثبت نوبت
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('appointments.calendar')" :active="request()->routeIs('appointments.calendar')" style="font-family:'Vazirmatn',sans-serif;">
+                تقویم
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('patients.index')" :active="request()->routeIs('patients.*')" style="font-family:'Vazirmatn',sans-serif;">
                 بیماران
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('queue.index')" :active="request()->routeIs('queue.*')" style="font-family:'Vazirmatn',sans-serif;">
+                صف
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('financial.debtors')" :active="request()->routeIs('financial.*')" style="font-family:'Vazirmatn',sans-serif;">
+                بدهکاران
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('waiting-list.index')" :active="request()->routeIs('waiting-list.*')" style="font-family:'Vazirmatn',sans-serif;">
                 لیست انتظار

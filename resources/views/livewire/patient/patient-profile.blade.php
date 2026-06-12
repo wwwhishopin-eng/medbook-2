@@ -87,12 +87,23 @@
                 <div style="font-size:12px;color:#9CA3AF;">موبایل</div>
             </div>
             @endif
+            <div style="text-align:center;">
+                <div style="font-size:14px;font-weight:700;color:{{ $patient->has_debt ? '#DC2626' : '#15803D' };}
+                            @if($patient->has_debt)background:#FEE2E2;padding:2px 10px;border-radius:20px;@endif">
+                    @if($patient->has_debt)
+                        @faCurrency($patient->debt)
+                    @else
+                        بدون بدهی
+                    @endif
+                </div>
+                <div style="font-size:12px;color:#9CA3AF;">مالی</div>
+            </div>
         </div>
     </div>
 
     {{-- Tabs --}}
     <div class="tab-bar" style="margin-bottom:16px;">
-        @foreach(['overview' => 'اطلاعات کلی', 'appointments' => 'نوبت‌ها', 'history' => 'سابقه پزشکی', 'conditions' => 'بیماری‌ها', 'contact' => 'تماس'] as $tab => $label)
+        @foreach(['overview' => 'اطلاعات کلی', 'appointments' => 'نوبت‌ها', 'history' => 'سابقه پزشکی', 'financial' => 'مالی', 'conditions' => 'بیماری‌ها', 'contact' => 'تماس'] as $tab => $label)
             <button wire:click="setTab('{{ $tab }}')"
                     style="font-weight:{{ $activeTab === $tab ? '600' : '400' }};
                            {{ $activeTab === $tab
@@ -250,6 +261,13 @@
                 بیماری زمینه‌ای ثبت نشده است.
             </p>
         @endif
+    </div>
+    @endif
+
+    {{-- Tab: Financial --}}
+    @if($activeTab === 'financial')
+    <div class="fade-up">
+        @livewire('financial.patient-transactions', ['patient' => $patient], key('fin-'.$patient->id))
     </div>
     @endif
 

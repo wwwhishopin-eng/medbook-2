@@ -5,6 +5,7 @@ namespace App\Livewire\Appointment;
 use App\Helpers\Persian;
 use App\Models\Appointment;
 use App\Models\Patient;
+use App\Models\Transaction;
 use App\Models\WaitingList;
 use App\Services\SlotSuggestionService;
 use App\Services\SMS\SmsService;
@@ -35,6 +36,9 @@ class QuickBooking extends Component
     public array $suggestedSlots = [];
     public ?array $firstAvailable = null;
 
+    // Debt warning
+    public ?int $debtAmount = null;
+
     protected SlotSuggestionService $slotService;
 
     public function boot(SlotSuggestionService $slotService): void
@@ -57,6 +61,7 @@ class QuickBooking extends Component
 
             if ($this->patient) {
                 $this->showNewPatientForm = false;
+                $this->debtAmount = Transaction::getDebtForPatient($this->patient->id);
                 $this->dispatch('patient-found', patientId: $this->patient->id);
             } else {
                 $this->showNewPatientForm = true;
@@ -65,6 +70,7 @@ class QuickBooking extends Component
         } else {
             $this->patient = null;
             $this->showNewPatientForm = false;
+            $this->debtAmount = null;
         }
     }
 
@@ -203,6 +209,7 @@ class QuickBooking extends Component
         $this->searchPhone = '';
         $this->patient = null;
         $this->showNewPatientForm = false;
+        $this->debtAmount = null;
         $this->new_first_name = '';
         $this->new_last_name = '';
         $this->new_phone = '';

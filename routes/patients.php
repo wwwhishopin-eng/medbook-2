@@ -10,6 +10,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('patients/{patient}/history', [PatientController::class, 'history'])
          ->name('patients.history');
 
+    Route::get('patients/{patient}/transactions', function (\App\Models\Patient $patient) {
+        return view('financial.transactions', compact('patient'));
+    })->name('patients.transactions');
+
     Route::get('api/patients/search', function (\Illuminate\Http\Request $request) {
         $term = $request->string('q')->trim();
 

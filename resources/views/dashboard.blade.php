@@ -16,6 +16,9 @@
                 $upcomingAppointments = \App\Models\Appointment::upcoming()->count();
                 $todayAppointments = \App\Models\Appointment::today()->count();
                 $todayCompleted = \App\Models\Appointment::today()->where('status', 'completed')->count();
+                $arrivedToday = \App\Models\Appointment::today()->where('status', 'arrived')->count();
+                $totalDebt = \App\Models\Transaction::getTotalDebt();
+                $debtorCount = \App\Models\Patient::whereHas('transactions')->get()->filter(fn($p) => $p->debt > 0)->count();
                 $recentPatients = \App\Models\Patient::latest()->limit(5)->get();
                 $upcomingVisits = \App\Models\Appointment::with('patient')
                     ->upcoming()
@@ -109,6 +112,38 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Arrived Today --}}
+                <div class="card" style="padding:20px;">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2">
+                                <path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div style="font-size:28px;font-weight:800;color:#1D4ED8;">@fa($arrivedToday)</div>
+                            <div style="font-size:12px;color:#9CA3AF;">حاضر در مطب</div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Total Debt --}}
+                <a href="{{ route('financial.debtors') }}" style="text-decoration:none;">
+                <div class="card" style="padding:20px;{{ $totalDebt > 0 ? 'border:2px solid #FECACA;' : '' }}">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#FEE2E2,#FECACA);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div style="font-size:28px;font-weight:800;color:#DC2626;">@faCurrency($totalDebt)</div>
+                            <div style="font-size:12px;color:#9CA3AF;">بدهی معوق (@fa($debtorCount) بدهکار)</div>
+                        </div>
+                    </div>
+                </div>
+                </a>
             </div>
 
             {{-- Two-column: Recent Patients + Upcoming Appointments --}}
@@ -178,6 +213,40 @@
                         <p style="text-align:center;color:#9CA3AF;padding:24px 0;font-size:13px;">نوبت آینده‌ای ثبت نشده.</p>
                     @endforelse
                 </div>
+            </div>
+
+            {{-- Quick Actions --}}
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:24px;">
+                <a href="{{ route('appointments.quick') }}" class="card" style="padding:16px;text-align:center;text-decoration:none;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E5BFF" stroke-width="2" style="margin:0 auto 8px;display:block;">
+                        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                    <div style="font-size:13px;font-weight:600;color:#111827;">ثبت نوبت</div>
+                </a>
+                <a href="{{ route('appointments.calendar') }}" class="card" style="padding:16px;text-align:center;text-decoration:none;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E8F72" stroke-width="2" style="margin:0 auto 8px;display:block;">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <div style="font-size:13px;font-weight:600;color:#111827;">تقویم</div>
+                </a>
+                <a href="{{ route('queue.index') }}" class="card" style="padding:16px;text-align:center;text-decoration:none;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2" style="margin:0 auto 8px;display:block;">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <div style="font-size:13px;font-weight:600;color:#111827;">مدیریت صف</div>
+                </a>
+                <a href="{{ route('financial.debtors') }}" class="card" style="padding:16px;text-align:center;text-decoration:none;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" style="margin:0 auto 8px;display:block;">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                    </svg>
+                    <div style="font-size:13px;font-weight:600;color:#111827;">بدهکاران</div>
+                </a>
+                <a href="{{ route('waiting-room.display') }}" class="card" style="padding:16px;text-align:center;text-decoration:none;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" style="margin:0 auto 8px;display:block;">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <div style="font-size:13px;font-weight:600;color:#111827;">صف نمایش</div>
+                </a>
             </div>
         </div>
     </div>

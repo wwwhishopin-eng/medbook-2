@@ -105,6 +105,21 @@ class Patient extends Model
         return $this->hasMany(Prescription::class)->latest();
     }
 
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class)->latest();
+    }
+
+    public function getDebtAttribute(): int
+    {
+        return Transaction::getDebtForPatient($this->id);
+    }
+
+    public function getHasDebtAttribute(): bool
+    {
+        return $this->debt > 0;
+    }
+
     // ── Scopes ───────────────────────────────────────────────────────────────
 
     public function scopeSearch(Builder $query, string $term): Builder

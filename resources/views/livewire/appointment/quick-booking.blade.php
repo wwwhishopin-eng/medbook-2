@@ -68,6 +68,21 @@
         </div>
     </div>
 
+    {{-- Debt warning --}}
+    @if($debtAmount && $debtAmount > 0)
+    <div style="background:#FEE2E2;border:1px solid #FECACA;border-radius:12px;padding:14px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span style="font-size:13px;font-weight:600;color:#991B1B;">
+                این بیمار دارای بدهی معوق به مبلغ @faCurrency($debtAmount) می‌باشد.
+            </span>
+        </div>
+    </div>
+    @endif
+
     @elseif($showNewPatientForm)
     {{-- New patient form --}}
     <div style="background:#EEF4FF;border:1px solid #DBEAFE;border-radius:12px;padding:16px;margin-bottom:20px;">
