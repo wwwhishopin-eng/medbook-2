@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('waiting_list', function (Blueprint $table) {
+        Schema::create('waiting_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
             $table->date('preferred_date')->nullable();
@@ -42,6 +42,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('sms_confirmations');
-        Schema::dropIfExists('waiting_list');
+        Schema::dropIfExists('waiting_lists');
     }
 };
