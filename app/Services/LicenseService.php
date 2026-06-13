@@ -16,6 +16,7 @@ class LicenseService
     const GRACE_PERIOD_DAYS = 3;
 
     private ?Subscription $cachedSubscription = null;
+    private bool $cachedSubscriptionLoaded = false;
 
     public function getActiveSubscription(): ?Subscription
     {
@@ -23,24 +24,33 @@ class LicenseService
             return null;
         }
 
-        if ($this->cachedSubscription !== null) {
+        if ($this->cachedSubscriptionLoaded) {
             return $this->cachedSubscription;
         }
 
         $userId = auth()->id();
         $cacheKey = "subscription:user:{$userId}";
 
-        $subscription = Cache::remember($cacheKey, self::CACHE_TTL, function () {
+        $subscriptionId = Cache::remember($cacheKey, self::CACHE_TTL, function () {
             return Subscription::query()
-                ->with('plan')
                 ->where('user_id', auth()->id())
                 ->whereIn('status', [Subscription::STATUS_ACTIVE, Subscription::STATUS_TRIAL])
                 ->orderByDesc('id')
-                ->first();
+                ->value('id');
         });
 
-        $this->cachedSubscription = $subscription;
-        return $subscription;
+        $this->cachedSubscriptionLoaded = true;
+
+        if ($subscriptionId === null) {
+            $this->cachedSubscription = null;
+            return null;
+        }
+
+        $this->cachedSubscription = Subscription::query()
+            ->with('plan')
+            ->find($subscriptionId);
+
+        return $this->cachedSubscription;
     }
 
     public function isValidLicense(): bool
@@ -144,6 +154,7 @@ class LicenseService
         $userId = auth()->id();
         Cache::forget("subscription:user:{$userId}");
         $this->cachedSubscription = null;
+        $this->cachedSubscriptionLoaded = false;
     }
 
     private function isWithinGracePeriod(): bool
