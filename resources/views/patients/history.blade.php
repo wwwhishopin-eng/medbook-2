@@ -33,6 +33,12 @@
 
             {{-- Livewire history component --}}
             @livewire('patient.patient-history', ['patient' => $patient], key('hist-'.$patient->id))
+
+            {{-- Follow-up suggestion --}}
+            @livewire('patient.follow-up-suggestion', ['patient' => $patient], key('followup-'.$patient->id))
+
+            {{-- Voice report --}}
+            @livewire('patient.voice-report', ['patient' => $patient], key('voice-hist-'.$patient->id))
         </div>
     </div>
 

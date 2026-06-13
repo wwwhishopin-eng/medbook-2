@@ -38,6 +38,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
                         داشبورد
                     </x-nav-link>
+                    <x-nav-link :href="route('audit.index')" :active="request()->routeIs('audit.*')" style="font-family:'Vazirmatn',sans-serif;">
+                        لاگ فعالیت
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -63,6 +66,10 @@
 
                         <x-dropdown-link :href="route('profile.edit')" style="font-family:'Vazirmatn',sans-serif;">
                             پروفایل
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('profile.edit') . '#push-settings'" style="font-family:'Vazirmatn',sans-serif;">
+                            تنظیمات اعلان
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -116,6 +123,9 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="font-family:'Vazirmatn',sans-serif;">
                 داشبورد
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('audit.index')" :active="request()->routeIs('audit.*')" style="font-family:'Vazirmatn',sans-serif;">
+                لاگ فعالیت
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -132,6 +142,10 @@
 
                 <x-responsive-nav-link :href="route('profile.edit')" style="font-family:'Vazirmatn',sans-serif;">
                     پروفایل
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('profile.edit') . '#push-settings'" style="font-family:'Vazirmatn',sans-serif;">
+                    تنظیمات اعلان
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

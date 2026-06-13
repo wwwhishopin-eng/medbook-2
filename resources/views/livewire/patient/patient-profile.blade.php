@@ -57,6 +57,7 @@
                    style="font-size:13px;padding:8px 16px;text-decoration:none;display:inline-flex;align-items:center;">
                     سابقه پزشکی
                 </a>
+                @livewire('patient.voice-report', ['patient' => $patient], key('voice-'.$patient->id))
             </div>
         </div>
 

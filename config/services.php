@@ -57,4 +57,11 @@ return [
         'grace_period_days' => env('SUBSCRIPTION_GRACE_PERIOD_DAYS', 3),
     ],
 
+    'webpush' => [
+        'vapid' => [
+            'public_key' => env('VAPID_PUBLIC_KEY'),
+            'private_key' => env('VAPID_PRIVATE_KEY'),
+        ],
+    ],
+
 ];

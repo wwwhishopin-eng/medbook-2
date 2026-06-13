@@ -18,6 +18,10 @@
             <div class="card" style="padding:24px;margin-bottom:20px;border:2px solid #FEE2E2;">
                 @include('profile.partials.delete-user-form')
             </div>
+
+            <div id="push-settings">
+                @livewire('settings.push-notification-settings')
+            </div>
         </div>
     </div>
 </x-app-layout>

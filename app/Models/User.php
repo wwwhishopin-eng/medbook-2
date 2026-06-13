@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 #[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     const ROLE_DOCTOR = 'doctor';
     const ROLE_OPERATOR = 'operator';
@@ -58,6 +59,11 @@ class User extends Authenticatable
 
         // Fall back to Laravel's default Gate/Policy handling for everything else
         return parent::can($abilities, $arguments);
+    }
+
+    public function pushSubscriptions()
+    {
+        return $this->hasMany(\App\Models\PushSubscription::class);
     }
 
     public function getPermissions(): array
